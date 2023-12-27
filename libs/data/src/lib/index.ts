@@ -1,3 +1,2 @@
-export function data(): string {
-  return 'data';
-}
+export { default as products } from './products';
+export { default as users } from './users';
