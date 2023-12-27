@@ -1,7 +1,6 @@
 import { Container } from 'react-bootstrap';
+import { Outlet } from 'react-router-dom';
 import { Header, Footer } from '@mern-proshop/ui';
-
-import HomeScreen from '../screens/HomeScreen';
 
 const App = () => {
   return (
@@ -9,7 +8,7 @@ const App = () => {
       <Header />
       <main className="py-3">
         <Container>
-          <HomeScreen />
+          <Outlet></Outlet>
         </Container>
       </main>
       <Footer />

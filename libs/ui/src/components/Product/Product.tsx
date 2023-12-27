@@ -1,4 +1,5 @@
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { Product as ProductType } from '@mern-proshop/types';
 
@@ -9,14 +10,14 @@ export interface ProductProps {
 export const Product = (props: ProductProps) => {
   return (
     <Card className="my-3 p-3 rounded">
-      <a href={`/product/${props.product._id}`}>
+      <Link to={`/product/${props.product._id}`}>
         <Card.Img src={props.product.image} variant="top" />
-      </a>
+      </Link>
 
       <Card.Body>
-        <a href={`/product/${props.product._id}`}>
+        <Link to={`/product/${props.product._id}`}>
           <Card.Title as="div">{props.product.name}</Card.Title>
-        </a>
+        </Link>
 
         <Card.Text as="h3">${props.product.price}</Card.Text>
       </Card.Body>
