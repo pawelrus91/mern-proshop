@@ -15,6 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@mern-proshop/data": ["libs/data/src/index.ts"],
+      "@mern-proshop/types": ["libs/types/src/index.ts"],
       "@mern-proshop/ui": ["libs/ui/src/index.ts"]
     }
   },
