@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets/styles/index.css';
 import './assets/styles/bootstrap.custom.css';
+import axios from 'axios';
 
 import {
   createBrowserRouter,
@@ -14,6 +15,8 @@ import {
 import App from './app/app';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+
+axios.defaults.baseURL = 'http://localhost:3333';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

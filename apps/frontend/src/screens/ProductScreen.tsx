@@ -1,16 +1,30 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
-import { products } from '@mern-proshop/data';
+import axios, { AxiosResponse } from 'axios';
 
 import { Rating } from '@mern-proshop/ui';
+import { Product } from '@mern-proshop/types';
 
 const ProductScreen = () => {
   const { id: productId } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<Product | null>();
 
-  const product = products.find((product) => product._id === productId)!;
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data }: AxiosResponse<Product> = await axios.get(
+        `/api/products/${productId}`
+      );
+      setProduct(data);
+    };
 
-  console.log(product);
+    fetchProduct();
+  }, [productId]);
+
+  if (!product) {
+    return <h2>loading</h2>;
+  }
 
   return (
     <>

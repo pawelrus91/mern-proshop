@@ -1,8 +1,23 @@
+import { useEffect, useState } from 'react';
+import axios, { AxiosResponse } from 'axios';
 import { Row, Col } from 'react-bootstrap';
-import { products } from '@mern-proshop/data';
+import { Product as TProduct } from '@mern-proshop/types';
 import { Product } from '@mern-proshop/ui';
 
 const HomeScreen = () => {
+  const [products, setProducts] = useState<TProduct[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const { data }: AxiosResponse<TProduct[]> = await axios.get(
+        '/api/products'
+      );
+      setProducts(data);
+    };
+
+    fetchProducts();
+  }, []);
+
   return (
     <>
       <h1>Latest Products</h1>
