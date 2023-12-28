@@ -6,10 +6,13 @@
 import express from 'express';
 import * as path from 'path';
 import cors from 'cors';
+import connectDB from './config/db';
 
 import { products } from '@mern-proshop/data';
 
 const app = express();
+
+connectDB();
 
 app.use(cors());
 

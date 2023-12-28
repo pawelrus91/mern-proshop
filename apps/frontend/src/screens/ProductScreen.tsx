@@ -9,7 +9,7 @@ import { Product } from '@mern-proshop/types';
 
 const ProductScreen = () => {
   const { id: productId } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>();
+  const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
