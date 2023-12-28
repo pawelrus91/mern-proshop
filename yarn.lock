@@ -1622,6 +1622,13 @@
   dependencies:
     "@nx/devkit" "17.2.7"
 
+"@nrwl/esbuild@17.2.7":
+  version "17.2.7"
+  resolved "https://registry.yarnpkg.com/@nrwl/esbuild/-/esbuild-17.2.7.tgz#9c75df8777d386c9d836d880ef17734ea8ee78fe"
+  integrity sha512-CnCfojDRK921ABuonfVAdBQ1Bc5q/kVXBstQfnTEgcaMjWPCt/zowUnYk+llL+WkKXu33UQYLId/gskzUKzGRw==
+  dependencies:
+    "@nx/esbuild" "17.2.7"
+
 "@nrwl/eslint-plugin-nx@17.2.7":
   version "17.2.7"
   resolved "https://registry.yarnpkg.com/@nrwl/eslint-plugin-nx/-/eslint-plugin-nx-17.2.7.tgz#5762b3dce6acb806c8c95bfa0610e79a0e74ecc7"
@@ -1711,6 +1718,20 @@
     ignore "^5.0.4"
     semver "7.5.3"
     tmp "~0.2.1"
+    tslib "^2.3.0"
+
+"@nx/esbuild@17.2.7":
+  version "17.2.7"
+  resolved "https://registry.yarnpkg.com/@nx/esbuild/-/esbuild-17.2.7.tgz#ea712e4d852eb0526780d51f93845f442d1bc444"
+  integrity sha512-Hq435xcv2hrCdbmybRKvVhrWaayfq1+tIFnMtPQZ3B/jKIjFpoWHAhdOUraGoqFrKsIkF9c40tsl6g0T5MCgbg==
+  dependencies:
+    "@nrwl/esbuild" "17.2.7"
+    "@nx/devkit" "17.2.7"
+    "@nx/js" "17.2.7"
+    chalk "^4.1.0"
+    fast-glob "3.2.7"
+    fs-extra "^11.1.0"
+    tsconfig-paths "^4.1.2"
     tslib "^2.3.0"
 
 "@nx/eslint-plugin@17.2.7":
@@ -4935,7 +4956,7 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
-esbuild@^0.19.3:
+esbuild@^0.19.2, esbuild@^0.19.3:
   version "0.19.10"
   resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.19.10.tgz#55e83e4a6b702e3498b9f872d84bfb4ebcb6d16e"
   integrity sha512-S1Y27QGt/snkNYrRcswgRFqZjaTG5a5xM3EQo97uNBnH505pdzSNe/HLBq1v0RO7iK/ngdbhJB6mDAp0OK+iUA==

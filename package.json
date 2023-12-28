@@ -2,7 +2,10 @@
   "name": "@mern-proshop/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "data:import": "npx nx serve seeder",
+    "data:destroy": "npx nx serve seeder --args=\"-d\""
+  },
   "private": true,
   "proxy": "http://localhost:3333",
   "dependencies": {
@@ -25,6 +28,7 @@
   "devDependencies": {
     "@babel/core": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
+    "@nx/esbuild": "17.2.7",
     "@nx/eslint": "17.2.7",
     "@nx/eslint-plugin": "17.2.7",
     "@nx/express": "^17.2.7",
@@ -53,6 +57,7 @@
     "@vitejs/plugin-react": "^4.2.0",
     "@vitest/ui": "~0.34.6",
     "babel-jest": "^29.4.1",
+    "esbuild": "^0.19.2",
     "eslint": "~8.48.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "2.27.5",

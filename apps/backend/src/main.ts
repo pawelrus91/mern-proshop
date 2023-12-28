@@ -27,9 +27,11 @@ app.get('/api/products', (req, res) => {
 });
 
 app.get('/api/products/:id', (req, res) => {
-  const product = products.find(
-    (productEntity) => productEntity._id === req.params.id
-  );
+  const product = products.find((productEntity) => {
+    // eslint-disable-next-line
+    // @ts-ignore
+    return productEntity._id === req.params.id;
+  });
   res.send(product);
 });
 

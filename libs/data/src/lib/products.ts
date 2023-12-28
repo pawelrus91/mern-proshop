@@ -1,8 +1,7 @@
 import { Product } from '@mern-proshop/types';
 
-const products: Product[] = [
+const products: Omit<Product, '_id'>[] = [
   {
-    _id: '1',
     name: 'Airpods Wireless Bluetooth Headphones',
     image: '/assets/images/airpods.jpg',
     description:
@@ -15,7 +14,6 @@ const products: Product[] = [
     numReviews: 12,
   },
   {
-    _id: '2',
     name: 'iPhone 13 Pro 256GB Memory',
     image: '/assets/images/phone.jpg',
     description:
@@ -28,7 +26,6 @@ const products: Product[] = [
     numReviews: 8,
   },
   {
-    _id: '3',
     name: 'Cannon EOS 80D DSLR Camera',
     image: '/assets/images/camera.jpg',
     description:
@@ -41,7 +38,6 @@ const products: Product[] = [
     numReviews: 12,
   },
   {
-    _id: '4',
     name: 'Sony Playstation 5',
     image: '/assets/images/playstation.jpg',
     description:
@@ -54,7 +50,6 @@ const products: Product[] = [
     numReviews: 12,
   },
   {
-    _id: '5',
     name: 'Logitech G-Series Gaming Mouse',
     image: '/assets/images/mouse.jpg',
     description:
@@ -67,7 +62,6 @@ const products: Product[] = [
     numReviews: 10,
   },
   {
-    _id: '6',
     name: 'Amazon Echo Dot 3rd Generation',
     image: '/assets/images/alexa.jpg',
     description:
