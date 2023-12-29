@@ -6,13 +6,15 @@
 import express from 'express';
 import * as path from 'path';
 import cors from 'cors';
-import connectDB from './config/db';
-
-import { products } from '@mern-proshop/data';
+// import connectDB from './config/db';
+import productRouter from './routes/productRoutes';
+import { errorHandler, noFound } from './moddleware/errorMiddleware';
+import { connectDB } from '@mern-proshop/database';
 
 const app = express();
 
-connectDB();
+// connectDB();
+connectDB(process.env.MONGO_URI);
 
 app.use(cors());
 
@@ -22,18 +24,10 @@ app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to backend!' });
 });
 
-app.get('/api/products', (req, res) => {
-  res.send(products);
-});
+app.use('/api/products', productRouter);
 
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find((productEntity) => {
-    // eslint-disable-next-line
-    // @ts-ignore
-    return productEntity._id === req.params.id;
-  });
-  res.send(product);
-});
+app.use(noFound);
+app.use(errorHandler);
 
 const port = process.env.PORT || 3333;
 const server = app.listen(port, () => {

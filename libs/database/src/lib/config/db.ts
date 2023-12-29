@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
 
-export const connectDB = async (mongoUri: string) => {
+export const connectDB = async (mongoUri?: string) => {
   try {
-    console.info(`@@@@ KKK ${mongoUri}`);
-    const connection = await mongoose.connect(mongoUri);
+    const connection = await mongoose.connect(
+      process.env['MONGO_URI'] || (mongoUri as string)
+    );
 
     console.log(`MongoDB Connected: ${connection.connection.host}`);
   } catch (error) {
