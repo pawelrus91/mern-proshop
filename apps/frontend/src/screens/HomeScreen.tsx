@@ -1,8 +1,5 @@
-// import { useEffect, useState } from 'react';
-// import axios, { AxiosResponse } from 'axios';
 import { Row, Col } from 'react-bootstrap';
-// import { Product as TProduct } from '@mern-proshop/types';
-import { Product } from '@mern-proshop/ui';
+import { Product, Loader, Message } from '@mern-proshop/ui';
 import { useGetProductsQuery } from '../slices/productsApiSlices';
 
 const HomeScreen = () => {
@@ -14,10 +11,10 @@ const HomeScreen = () => {
   } = useGetProductsQuery();
 
   if (isError) {
-    <div>{JSON.stringify(error)}</div>;
+    <Message variant="danger">{JSON.stringify(error)}</Message>;
   }
   if (isLoading) {
-    return <h2>Loading...</h2>;
+    return <Loader />;
   }
 
   return (

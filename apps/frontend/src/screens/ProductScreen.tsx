@@ -1,29 +1,39 @@
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
-import axios, { AxiosResponse } from 'axios';
+import { useGetProductDetailsQuery } from '../slices/productsApiSlices';
 
-import { Rating } from '@mern-proshop/ui';
-import { Product } from '@mern-proshop/types';
+import { Loader, Rating, Message } from '@mern-proshop/ui';
 
 const ProductScreen = () => {
   const { id: productId } = useParams<{ id: string }>();
-  const [product, setProduct] = useState<Product | null>(null);
+  const {
+    data: product,
+    isLoading,
+    isError,
+    error,
+  } = useGetProductDetailsQuery({ id: productId as string });
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      const { data }: AxiosResponse<Product> = await axios.get(
-        `/api/products/${productId}`
-      );
-      setProduct(data);
-    };
+  if (isError) {
+    return (
+      <>
+        <Link to="/" className="btn btn-light my-3">
+          Go Back
+        </Link>
+        <Message variant="danger">{JSON.stringify(error)}</Message>;
+      </>
+    );
+  }
 
-    fetchProduct();
-  }, [productId]);
-
-  if (!product) {
-    return <h2>loading</h2>;
+  if (isLoading || !product) {
+    return (
+      <>
+        <Link to="/" className="btn btn-light my-3">
+          Go Back
+        </Link>
+        <Loader />;
+      </>
+    );
   }
 
   return (
