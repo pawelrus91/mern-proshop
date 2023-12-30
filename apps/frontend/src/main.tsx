@@ -4,6 +4,8 @@ import * as ReactDOM from 'react-dom/client';
 import './assets/styles/index.css';
 import './assets/styles/bootstrap.custom.css';
 import axios from 'axios';
+import { Provider } from 'react-redux';
+import store from './store';
 
 import {
   createBrowserRouter,
@@ -32,6 +34,8 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );
