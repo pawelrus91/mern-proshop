@@ -1,6 +1,6 @@
 import { Row, Col } from 'react-bootstrap';
 import { Product, Loader, Message } from '@mern-proshop/ui';
-import { useGetProductsQuery } from '../slices/productsApiSlices';
+import { useGetProductsQuery } from '@mern-proshop/state';
 
 const HomeScreen = () => {
   const {

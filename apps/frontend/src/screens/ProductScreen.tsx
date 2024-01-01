@@ -10,9 +10,11 @@ import {
   Button,
   Form,
 } from 'react-bootstrap';
-import { useGetProductDetailsQuery } from '../slices/productsApiSlices';
-import { addToCart } from '../slices/cartSlice';
-import { useAppDispatch } from '../store';
+import {
+  useGetProductDetailsQuery,
+  addToCart,
+  useAppDispatch,
+} from '@mern-proshop/state';
 
 import { Loader, Rating, Message } from '@mern-proshop/ui';
 

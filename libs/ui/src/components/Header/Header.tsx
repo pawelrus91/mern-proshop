@@ -1,11 +1,15 @@
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Badge } from 'react-bootstrap';
 import { FaShoppingCart, FaUser } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
 import logo from '../../assets/logo.png';
 
+import { useAppSelector } from '@mern-proshop/state';
+
 interface HeaderProps {}
 
 export const Header = (props: HeaderProps) => {
+  const { cartItems } = useAppSelector((state) => state.cart);
+
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="md" collapseOnSelect>
@@ -21,7 +25,12 @@ export const Header = (props: HeaderProps) => {
             <Nav className="ms-auto">
               <LinkContainer to="/card">
                 <Nav.Link>
-                  <FaShoppingCart /> Cart
+                  <FaShoppingCart /> Cart &nbsp;
+                  {cartItems.length > 0 && (
+                    <Badge pill bg="success">
+                      {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+                    </Badge>
+                  )}
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/login">

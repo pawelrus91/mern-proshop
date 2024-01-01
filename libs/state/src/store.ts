@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector, TypedUseSelectorHook } from 'react-redux';
 import { apiSlice } from './slices/apiSlices';
-import cartSliceReducer from './slices/cartSlice';
+import { cartSliceReducer } from './slices/cartSlice';
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     cart: cartSliceReducer,
@@ -16,6 +16,5 @@ const store = configureStore({
 export type RootState = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppDispatch: () => AppDispatch = useDispatch;
-
-export default store;

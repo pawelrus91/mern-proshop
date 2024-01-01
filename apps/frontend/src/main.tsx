@@ -5,7 +5,8 @@ import './assets/styles/index.css';
 import './assets/styles/bootstrap.custom.css';
 import axios from 'axios';
 import { Provider } from 'react-redux';
-import store from './store';
+
+import { store } from '@mern-proshop/state';
 
 import {
   createBrowserRouter,
@@ -17,6 +18,7 @@ import {
 import App from './app/app';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CardScreen';
 
 axios.defaults.baseURL = 'http://localhost:3333';
 
@@ -25,6 +27,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route index={true} path="/" element={<HomeScreen />} />
       <Route path="/product/:id" element={<ProductScreen />} />
+      <Route path="/cart" element={<CartScreen />} />
     </Route>
   )
 );
