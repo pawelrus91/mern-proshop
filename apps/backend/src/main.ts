@@ -8,6 +8,7 @@ import * as path from 'path';
 import cors from 'cors';
 // import connectDB from './config/db';
 import productRouter from './routes/productRoutes';
+import userRouter from './routes/userRoutes';
 import { errorHandler, noFound } from './moddleware/errorMiddleware';
 import { connectDB } from '@mern-proshop/database';
 
@@ -25,6 +26,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/api/products', productRouter);
+app.use('/api/users', userRouter);
 
 app.use(noFound);
 app.use(errorHandler);
