@@ -6,7 +6,7 @@
 import express from 'express';
 import * as path from 'path';
 import cors from 'cors';
-// import connectDB from './config/db';
+import cookieParser from 'cookie-parser';
 import productRouter from './routes/productRoutes';
 import userRouter from './routes/userRoutes';
 import { errorHandler, noFound } from './moddleware/errorMiddleware';
@@ -16,6 +16,13 @@ const app = express();
 
 // connectDB();
 connectDB(process.env.MONGO_URI);
+
+// Body parser middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Cookie parser middleware
+app.use(cookieParser());
 
 app.use(cors());
 

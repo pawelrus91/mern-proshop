@@ -1,8 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+import { compare, genSalt, hash } from 'bcryptjs';
 
-import { User as User } from '@mern-proshop/types';
+import { User as TUser } from '@mern-proshop/types';
 
-const userSchema = new mongoose.Schema<User>(
+type UserMethod = {
+  matchPassword: (enteredPassword: TUser['password']) => Promise<boolean>;
+};
+
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+type UserModel = Model<TUser, object, UserMethod>;
+
+const userSchema = new mongoose.Schema<TUser, UserModel>(
   {
     name: {
       type: String,
@@ -28,6 +37,22 @@ const userSchema = new mongoose.Schema<User>(
   }
 );
 
-const UserModel = mongoose.model<User>('User', userSchema);
+userSchema.methods['matchPassword'] = async function (
+  enteredPassword: TUser['password']
+) {
+  return await compare(enteredPassword, this['password']);
+};
 
-export default UserModel;
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    next();
+  }
+
+  const salt = await genSalt(10);
+
+  this.password = await hash(this.password, salt);
+});
+
+const User = mongoose.model<TUser, UserModel>('User', userSchema);
+
+export default User;
