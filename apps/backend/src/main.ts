@@ -9,6 +9,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import productRouter from './routes/productRoutes';
 import userRouter from './routes/userRoutes';
+import orderRouter from './routes/ordersRoutes';
 import { errorHandler, noFound } from './moddleware/errorMiddleware';
 import { connectDB } from '@mern-proshop/database';
 
@@ -24,7 +25,12 @@ app.use(express.urlencoded({ extended: true }));
 // Cookie parser middleware
 app.use(cookieParser());
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:4200',
+    credentials: true,
+  })
+);
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
@@ -34,6 +40,7 @@ app.get('/api', (req, res) => {
 
 app.use('/api/products', productRouter);
 app.use('/api/users', userRouter);
+app.use('/api/orders', orderRouter);
 
 app.use(noFound);
 app.use(errorHandler);

@@ -1,3 +1,4 @@
+export * from './slices/ordersApiSlice';
 export * from './slices/authSlice';
 export * from './slices/apiSlices';
 export * from './slices/cartSlice';

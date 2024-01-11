@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { updateCard } from '../utils/cartUtils';
 
-import { Product } from '@mern-proshop/types';
+import { Product, ShippingAddress, PaymentMethod } from '@mern-proshop/types';
 
 export type CartItem = {
   product: Product;
@@ -14,11 +14,13 @@ export type CartState = {
   shippingPrice: string;
   taxPrice: string;
   totalPrice: string;
+  shippingAddress: ShippingAddress;
+  paymentMethod: PaymentMethod;
 };
 
 const initialState: CartState = localStorage.getItem('cart')
   ? JSON.parse(localStorage.getItem('cart') as string)
-  : { cartItems: [] };
+  : { cartItems: [], shippingAddress: {}, paymentMethod: 'PayPal' };
 
 const cartSlice = createSlice({
   name: 'cart',
@@ -49,9 +51,30 @@ const cartSlice = createSlice({
 
       return updateCard(state);
     },
+    saveShippingAddress: (state, action: PayloadAction<ShippingAddress>) => {
+      state.shippingAddress = action.payload;
+
+      return updateCard(state);
+    },
+    savePaymentMethod: (state, action: PayloadAction<PaymentMethod>) => {
+      state.paymentMethod = action.payload;
+
+      return updateCard(state);
+    },
+    clearCartItems: (state) => {
+      state.cartItems = [];
+
+      return updateCard(state);
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  saveShippingAddress,
+  savePaymentMethod,
+  clearCartItems,
+} = cartSlice.actions;
 
 export const cartSliceReducer = cartSlice.reducer;

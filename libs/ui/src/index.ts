@@ -1,3 +1,5 @@
+export * from './components/CheckoutSteps/CheckoutSteps';
+export * from './components/PrivateRoute';
 export * from './components/FormContainer';
 export * from './components/Message/Message';
 export * from './components/Loader/Loader';

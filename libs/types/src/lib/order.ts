@@ -1,5 +1,6 @@
 import type { Types } from 'mongoose';
 
+//
 export type OrderItem = {
   name: string;
   qty: number;
@@ -22,11 +23,13 @@ export type PaymentResult = {
   email_address?: string;
 };
 
+export type PaymentMethod = 'Stripe' | 'PayPal';
+
 export type Order = {
   user: Types.ObjectId;
   orderItems: OrderItem[];
   shippingAddress: ShippingAddress;
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
   paymentResult: PaymentResult;
   itemsPrice: number;
   taxPrice: number;
@@ -37,3 +40,8 @@ export type Order = {
   isDelivered: boolean;
   deliveredAt?: Date;
 };
+
+export type NewOrder = Omit<
+  Order,
+  'isPaid' | 'paidAt' | 'isDelivered' | 'deliveredAt'
+>;
