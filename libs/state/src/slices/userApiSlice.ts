@@ -7,6 +7,8 @@ import {
   UserRegistration,
 } from '@mern-proshop/types';
 
+type UserProfile = Omit<UserInfo, 'isAdmin'>;
+
 const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<UserInfo, AuthCredential>({
@@ -29,8 +31,19 @@ const usersApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
       }),
     }),
+    profile: builder.mutation<UserProfile, UserProfile>({
+      query: (data) => ({
+        url: `${USERS_URL}/profile`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  usersApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useProfileMutation,
+} = usersApiSlice;

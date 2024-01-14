@@ -26,17 +26,6 @@ const PlaceOrderScreen = () => {
     }
   }, [navigate, cart.paymentMethod, cart.shippingAddress.address]);
 
-  console.log(cart.cartItems);
-
-  const orderItems = cart.cartItems.map(({ product, qty: quantity }) => ({
-    qty: quantity,
-    name: product.name,
-    image: product.image,
-    price: product.price,
-    product: product._id,
-  }));
-
-  console.log('@@@@ orderItems', orderItems);
   const placeOrderHandler = async () => {
     try {
       const newOrder: NewOrder = {

@@ -1,7 +1,7 @@
 import { apiSlice } from './apiSlices';
 
-import { NewOrder, Order } from '@mern-proshop/types';
-import { ORDERS_URL } from '../constants';
+import { NewOrder, Order, Modify, User } from '@mern-proshop/types';
+import { ORDERS_URL, PAYPAL_URL } from '../constants';
 
 type CreateOrderResponse = Order & { _id: string };
 
@@ -14,6 +14,26 @@ const ordersApiSlice = apiSlice.injectEndpoints({
         body: order,
       }),
     }),
+    getOrderDetails: builder.query<Modify<Order, { user: User }>, string>({
+      query: (orderId) => ({
+        url: `${ORDERS_URL}/${orderId}`,
+      }),
+      keepUnusedDataFor: 5,
+    }),
+    payOrder: builder.mutation({
+      query: ({ orderId, details }) => ({
+        url: `${ORDERS_URL}/${orderId}/pay`,
+        method: 'PUT',
+        body: details,
+      }),
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getPaypalClientId: builder.query<any, void>({
+      query: () => ({
+        url: PAYPAL_URL,
+      }),
+      keepUnusedDataFor: 5,
+    }),
     // getOrders: builder.query({
     //   query: () => ({
     //     url: ORDERS_URL,
@@ -24,13 +44,7 @@ const ordersApiSlice = apiSlice.injectEndpoints({
     //     url: `${ORDERS_URL}/${orderId}`,
     //   }),
     // }),
-    // payOrder: builder.mutation({
-    // query: (orderId: string, paymentResult) => ({
-    //     url: `/api/orders/${orderId}/pay`,
-    //     method: 'PUT',
-    //     body: paymentResult,
-    // }),
-    // }),
+
     // deliverOrder: builder.mutation({
     //   query: (orderId) => ({
     //     url: `${ORDERS_URL}/${orderId}/deliver`,
@@ -40,4 +54,9 @@ const ordersApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateOrderMutation } = ordersApiSlice;
+export const {
+  useCreateOrderMutation,
+  useGetOrderDetailsQuery,
+  usePayOrderMutation,
+  useGetPaypalClientIdQuery,
+} = ordersApiSlice;

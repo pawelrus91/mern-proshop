@@ -26,6 +26,7 @@ export type PaymentResult = {
 export type PaymentMethod = 'Stripe' | 'PayPal';
 
 export type Order = {
+  _id: string;
   user: Types.ObjectId;
   orderItems: OrderItem[];
   shippingAddress: ShippingAddress;

@@ -6,6 +6,7 @@ import './assets/styles/bootstrap.custom.css';
 import axios from 'axios';
 import { Provider } from 'react-redux';
 
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { store } from '@mern-proshop/state';
 
 import {
@@ -24,6 +25,7 @@ import RegisterScreen from './screens/RegisterScreen';
 import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import OrderScreen from './screens/OrderScreen';
 import { PrivateRoute } from '@mern-proshop/ui';
 
 axios.defaults.baseURL = 'http://localhost:3333';
@@ -41,6 +43,7 @@ const router = createBrowserRouter(
         <Route path="/shipping" element={<ShippingScreen />} />
         <Route path="/payment" element={<PaymentScreen />} />
         <Route path="/placeorder" element={<PlaceOrderScreen />} />
+        <Route path="/order/:id" element={<OrderScreen />} />
       </Route>
     </Route>
   )
@@ -52,7 +55,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <PayPalScriptProvider
+        options={{ clientId: 'test', components: 'buttons', currency: 'USD' }}
+      >
+        <RouterProvider router={router} />
+      </PayPalScriptProvider>
     </Provider>
   </StrictMode>
 );
