@@ -27,7 +27,8 @@ import PaymentScreen from './screens/PaymentScreen';
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
 import OrderScreen from './screens/OrderScreen';
 import ProfileScreen from './screens/ProfileScreen';
-import { PrivateRoute } from '@mern-proshop/ui';
+import OrderListScreen from './screens/admin/OrderListScreen';
+import { PrivateRoute, AdminRoute } from '@mern-proshop/ui';
 
 axios.defaults.baseURL = 'http://localhost:3333';
 
@@ -46,6 +47,10 @@ const router = createBrowserRouter(
         <Route path="/placeorder" element={<PlaceOrderScreen />} />
         <Route path="/order/:id" element={<OrderScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+      </Route>
+
+      <Route path="" element={<AdminRoute />}>
+        <Route path="/admin/orderlist" element={<OrderListScreen />} />
       </Route>
     </Route>
   )
