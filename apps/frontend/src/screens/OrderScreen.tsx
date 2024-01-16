@@ -22,7 +22,8 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
-  // useAppSelector,
+  useDeliverOrderMutation,
+  useAppSelector,
 } from '@mern-proshop/state';
 
 const OrderScreen = () => {
@@ -35,6 +36,10 @@ const OrderScreen = () => {
     isError,
     error,
   } = useGetOrderDetailsQuery(orderId!);
+
+  const [deliverOrder, { isLoading: isDeliverLoading }] =
+    useDeliverOrderMutation();
+
   const [
     payOrder,
     // { isLoading: isPayLoading }
@@ -48,7 +53,7 @@ const OrderScreen = () => {
     error: errorPayPal,
   } = useGetPaypalClientIdQuery();
 
-  // const { userInfo } = useAppSelector((state) => state.auth);
+  const { userInfo } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && payPal.clientId) {
@@ -127,6 +132,16 @@ const OrderScreen = () => {
       .then((orderId) => {
         return orderId;
       });
+  };
+
+  const deliverOrderHandle = async () => {
+    try {
+      await deliverOrder(orderId!);
+      refetch();
+      toast.success('Order Delivered');
+    } catch (error) {
+      toast.error(JSON.stringify(error));
+    }
   };
 
   return (
@@ -277,6 +292,23 @@ const OrderScreen = () => {
                   )}
                 </ListGroup.Item>
               )}
+
+              {isDeliverLoading && <Loader />}
+
+              {userInfo &&
+                userInfo?.isAdmin &&
+                order.isPaid &&
+                !order.isDelivered && (
+                  <ListGroup.Item>
+                    <Button
+                      type="button"
+                      className="btn btn-block"
+                      onClick={deliverOrderHandle}
+                    >
+                      Mark As Delivered
+                    </Button>
+                  </ListGroup.Item>
+                )}
             </ListGroup>
           </Card>
         </Col>
