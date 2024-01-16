@@ -5,7 +5,7 @@ import {
   Col,
   ListGroup,
   Image,
-  Form,
+  // Form,
   Button,
   Card,
 } from 'react-bootstrap';
@@ -22,7 +22,7 @@ import {
   useGetOrderDetailsQuery,
   usePayOrderMutation,
   useGetPaypalClientIdQuery,
-  useAppSelector,
+  // useAppSelector,
 } from '@mern-proshop/state';
 
 const OrderScreen = () => {
@@ -35,7 +35,10 @@ const OrderScreen = () => {
     isError,
     error,
   } = useGetOrderDetailsQuery(orderId!);
-  const [payOrder, { isLoading: isPayLoading }] = usePayOrderMutation();
+  const [
+    payOrder,
+    // { isLoading: isPayLoading }
+  ] = usePayOrderMutation();
 
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
 
@@ -45,7 +48,7 @@ const OrderScreen = () => {
     error: errorPayPal,
   } = useGetPaypalClientIdQuery();
 
-  const { userInfo } = useAppSelector((state) => state.auth);
+  // const { userInfo } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     if (!errorPayPal && !loadingPayPal && payPal.clientId) {

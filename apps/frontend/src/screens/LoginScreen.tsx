@@ -37,6 +37,8 @@ const LoginScreen = () => {
     try {
       const res = await login({ email, password }).unwrap();
 
+      // eslint-disable-next-line
+      // @ts-ignore
       dispatch(setCredentials({ ...res }));
       toast.success('Login successful');
     } catch (err) {

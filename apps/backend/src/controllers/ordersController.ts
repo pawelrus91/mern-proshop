@@ -94,8 +94,6 @@ const getOrderById = asyncHandler(async (req: Request, res: Response) => {
 const updateOrderToPaid = asyncHandler(async (req: Request, res: Response) => {
   const order = await Order.findById(req.params.id);
 
-  console.log('@@@');
-
   if (order) {
     order.isPaid = true;
     order.paidAt = new Date();

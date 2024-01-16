@@ -44,6 +44,8 @@ const RegisterScreen = () => {
       try {
         const res = await register({ name, email, password }).unwrap();
 
+        // eslint-disable-next-line
+        // @ts-ignore
         dispatch(setCredentials({ ...res }));
         toast.success('Login successful');
       } catch (err) {

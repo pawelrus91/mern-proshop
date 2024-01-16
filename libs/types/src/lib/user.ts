@@ -11,4 +11,4 @@ export type UserRegistration = Pick<User, 'name' | 'email' | 'password'>;
 
 export type AuthCredential = Pick<UserRegistration, 'email' | 'password'>;
 
-export type UserInfo = Omit<User, 'password'>;
+export type UserInfo = User;
