@@ -1,8 +1,8 @@
 import asyncHandler from '../moddleware/asyncHandler';
 
 import { Product } from '@mern-proshop/database';
+import { Product as TProduct } from '@mern-proshop/types';
 import type { Request, Response } from 'express';
-import { DecodeOptions } from 'jsonwebtoken';
 
 /**
  * @description Fetch all products
@@ -55,4 +55,35 @@ const createProduct = asyncHandler(async (req: Request, res: Response) => {
   res.status(201).send(createdProduct);
 });
 
-export { getProducts, getProductById, createProduct };
+/**
+ * @description Update a product
+ * @route       PUT /api/products/:id
+ * @access      Private/Admin
+ */
+const updateProduct = asyncHandler(
+  async (req: Request<{ id: string }, unknown, TProduct>, res: Response) => {
+    const { name, price, description, image, brand, category, countInStock } =
+      req.body;
+
+    const product = await Product.findByIdAndUpdate(req.params.id);
+
+    if (product) {
+      product.name = name || product.name;
+      product.price = price || product.price;
+      product.description = description || product.description;
+      product.image = image || product.image;
+      product.brand = brand || product.brand;
+      product.category = category || product.category;
+      product.countInStock = countInStock || product.countInStock;
+
+      const updatedProduct = await product.save();
+
+      return res.status(200).send(updatedProduct);
+    } else {
+      res.status(404);
+      throw new Error('Product not found');
+    }
+  }
+);
+
+export { getProducts, getProductById, createProduct, updateProduct };
