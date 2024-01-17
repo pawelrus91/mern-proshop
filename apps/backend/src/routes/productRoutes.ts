@@ -1,6 +1,11 @@
 import express from 'express';
 
-import { getProductById, getProducts } from '../controllers/productController';
+import {
+  getProductById,
+  getProducts,
+  createProduct,
+} from '../controllers/productController';
+import { protect, admin } from '../moddleware/authMiddleware';
 
 const router = express.Router();
 
@@ -8,7 +13,7 @@ const router = express.Router();
 
 // router.get('/:id', getProductById);
 
-router.route('/').get(getProducts);
+router.route('/').get(getProducts).post(protect, admin, createProduct);
 router.route('/:id').get(getProductById);
 
 export default router;

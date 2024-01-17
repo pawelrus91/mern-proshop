@@ -1,15 +1,32 @@
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Row, Col, Tab } from 'react-bootstrap';
-import { FaTimes, FaEdit, FaTrash } from 'react-icons/fa';
+import { Table, Button, Row, Col } from 'react-bootstrap';
+import { FaEdit, FaTrash } from 'react-icons/fa';
 import { Loader, Message } from '@mern-proshop/ui';
-import { useGetProductsQuery } from '@mern-proshop/state';
+import {
+  useGetProductsQuery,
+  useCreateProductMutation,
+} from '@mern-proshop/state';
+import { toast } from 'react-toastify';
 import { Product } from '@mern-proshop/types';
 
 const ProductListScreen = () => {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+
+  const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
 
   const deleteHandler = (id: Product['_id']) => {
     console.log('delete', id);
+  };
+
+  const createProductHandler = async () => {
+    if (window.confirm('Are you sure you want to create a new products?')) {
+      try {
+        await createProduct();
+        refetch();
+      } catch (error) {
+        toast.error(JSON.stringify(error));
+      }
+    }
   };
 
   return (
@@ -19,11 +36,13 @@ const ProductListScreen = () => {
           <h1>Products</h1>
         </Col>
         <Col className="text-end">
-          <Button className="my-3">
+          <Button className="my-3" onClick={createProductHandler}>
             <FaEdit /> Create Product
           </Button>
         </Col>
       </Row>
+
+      {isCreating && <Loader />}
 
       {isLoading ? (
         <Loader />
