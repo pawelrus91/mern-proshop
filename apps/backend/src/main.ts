@@ -7,11 +7,13 @@ import express from 'express';
 import * as path from 'path';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import productRouter from './routes/productRoutes';
-import userRouter from './routes/userRoutes';
-import orderRouter from './routes/ordersRoutes';
+import productRoutes from './routes/productRoutes';
+import userRoutes from './routes/userRoutes';
+import orderRoutes from './routes/ordersRoutes';
+import uploadRoutes from './routes/uploadRoutes';
 import { errorHandler, noFound } from './moddleware/errorMiddleware';
 import { connectDB } from '@mern-proshop/database';
+import bodyParser from 'body-parser';
 
 const app = express();
 
@@ -19,8 +21,8 @@ const app = express();
 connectDB(process.env.MONGO_URI);
 
 // Body parser middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Cookie parser middleware
 app.use(cookieParser());
@@ -31,16 +33,19 @@ app.use(
     credentials: true,
   })
 );
+const __dirname = path.resolve(); // Set __dirname to current directory
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.get('/api', (req, res) => {
   res.send({ message: 'Welcome to backend!' });
 });
 
-app.use('/api/products', productRouter);
-app.use('/api/users', userRouter);
-app.use('/api/orders', orderRouter);
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/upload', uploadRoutes);
 
 app.get('/api/config/paypal', (_, res) =>
   res.send({ clientId: process.env.PAYPAL_CLIENT_ID })

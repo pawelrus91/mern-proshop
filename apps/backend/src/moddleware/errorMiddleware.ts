@@ -11,6 +11,8 @@ const errorHandler = (err, req, res, next) => {
 
   console.log(err.name, err.kind);
 
+  console.error(JSON.stringify(err));
+
   // Check if the error is a mongoose error
   if (err.name === 'CastError' && err.kind === 'ObjectId') {
     message = 'Resource not found';
