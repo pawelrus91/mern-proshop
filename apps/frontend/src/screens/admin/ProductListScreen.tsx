@@ -5,6 +5,7 @@ import { Loader, Message } from '@mern-proshop/ui';
 import {
   useGetProductsQuery,
   useCreateProductMutation,
+  useDeleteProductMutation,
 } from '@mern-proshop/state';
 import { toast } from 'react-toastify';
 import { Product } from '@mern-proshop/types';
@@ -14,8 +15,20 @@ const ProductListScreen = () => {
 
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
 
-  const deleteHandler = (id: Product['_id']) => {
+  const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductMutation();
+
+  const deleteHandler = async (id: Product['_id']) => {
     console.log('delete', id);
+
+    if (window.confirm('Are you sure you want to delete this product?')) {
+      try {
+        await deleteProduct(id);
+        refetch();
+        toast.success('Product deleted');
+      } catch (error) {
+        toast.error(JSON.stringify(error));
+      }
+    }
   };
 
   const createProductHandler = async () => {
@@ -43,6 +56,7 @@ const ProductListScreen = () => {
       </Row>
 
       {isCreating && <Loader />}
+      {isDeleting && <Loader />}
 
       {isLoading ? (
         <Loader />
