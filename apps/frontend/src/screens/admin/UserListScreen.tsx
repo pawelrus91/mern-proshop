@@ -2,8 +2,8 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button } from 'react-bootstrap';
 import { FaTimes, FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 import { Loader, Message } from '@mern-proshop/ui';
-
-import { useGetUsersQuery } from '@mern-proshop/state';
+import { toast } from 'react-toastify';
+import { useGetUsersQuery, useDeleteUserMutation } from '@mern-proshop/state';
 
 const UserListScreen = () => {
   const {
@@ -14,15 +14,24 @@ const UserListScreen = () => {
     error,
   } = useGetUsersQuery();
 
-  const deleteHandler = (id: string) => {
+  const [deleteUser, { isLoading: isLoadingDelete }] = useDeleteUserMutation();
+
+  const deleteHandler = async (id: string) => {
     if (window.confirm('Are you sure')) {
-      // delete products
+      try {
+        await deleteUser(id);
+        toast.success('User removed');
+        refetch();
+      } catch (err) {
+        toast.error(JSON.stringify(err));
+      }
     }
   };
 
   return (
     <>
       <h1>Users</h1>
+      {isLoadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : isError ? (
