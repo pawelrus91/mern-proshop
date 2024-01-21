@@ -1,7 +1,7 @@
 import asyncHandler from '../moddleware/asyncHandler';
 
 import { Product } from '@mern-proshop/database';
-import { Product as TProduct } from '@mern-proshop/types';
+import type { Product as TProduct, Review } from '@mern-proshop/types';
 import type { Request, Response } from 'express';
 
 /**
@@ -93,7 +93,7 @@ const updateProduct = asyncHandler(
  */
 const deleteProduct = asyncHandler(
   async (req: Request<{ id: string }>, res: Response) => {
-    const product = await Product.findByIdAndUpdate(req.params.id);
+    const product = await Product.findById(req.params.id);
 
     if (product) {
       await product.deleteOne({ _id: req.params.id });
@@ -106,10 +106,65 @@ const deleteProduct = asyncHandler(
   }
 );
 
+/**
+ * @description Create a new  review
+ * @route       POST /api/products/:id/reviews
+ * @access      Private
+ */
+const createProductReview = asyncHandler(
+  async (
+    req: Request<{ id: string }, undefined, Pick<Review, 'rating' | 'comment'>>,
+    res: Response
+  ) => {
+    const { rating, comment } = req.body;
+
+    const product = await Product.findById(req.params.id);
+
+    if (product) {
+      const alreadyReviewed = product.reviews.find(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        (r) => r.user.toString() === req.user._id.toString()
+      );
+
+      if (alreadyReviewed) {
+        res.status(400);
+        throw new Error('Product already reviewed');
+      }
+
+      const review = {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        name: req.user.name,
+        rating: Number(rating),
+        comment,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        user: req.user._id,
+      };
+
+      product.reviews.push(review);
+
+      product.numReviews = product.reviews.length;
+
+      product.rating =
+        product.reviews.reduce((acc, review) => acc + review.rating, 0) /
+        product.reviews.length;
+
+      await product.save();
+      res.status(201).send({ message: 'Review added' });
+    } else {
+      res.status(404);
+      throw new Error('Resource not found');
+    }
+  }
+);
+
 export {
   getProducts,
   getProductById,
   createProduct,
   updateProduct,
   deleteProduct,
+  createProductReview,
 };

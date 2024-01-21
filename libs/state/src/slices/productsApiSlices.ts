@@ -1,9 +1,11 @@
 import { PRODUCTS_URL } from '../constants';
 import { apiSlice } from './apiSlices';
 
-import { Product } from '@mern-proshop/types';
+import type { Product, Review, ProductSchema } from '@mern-proshop/types';
 
 type UploadImageResponse = { message: string; image: string };
+
+type CreateReview = Pick<Review, 'comment' | 'rating'> & { productId: string };
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,7 +16,7 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
     }),
-    getProductDetails: builder.query<Product, { id: string }>({
+    getProductDetails: builder.query<ProductSchema, { id: string }>({
       query: ({ id }) => ({
         url: `${PRODUCTS_URL}/${id}`,
         keepUnusedDataFor: 5,
@@ -50,6 +52,14 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Products'],
     }),
+    createReview: builder.mutation<void, CreateReview>({
+      query: (data) => ({
+        url: `${PRODUCTS_URL}/${data.productId}/reviews`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Products'],
+    }),
   }),
 });
 
@@ -60,4 +70,5 @@ export const {
   useUpdateProductMutation,
   useUploadProductImageMutation,
   useDeleteProductMutation,
+  useCreateReviewMutation,
 } = productsApiSlice;

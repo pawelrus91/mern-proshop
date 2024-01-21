@@ -3,7 +3,7 @@ import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
 /* eslint-disable-next-line */
 export interface RatingProps {
   value: number;
-  text: string;
+  text?: string;
 }
 
 export const Rating = (props: RatingProps) => {
