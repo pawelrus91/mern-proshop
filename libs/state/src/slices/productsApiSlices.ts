@@ -15,14 +15,16 @@ export type GetProductResponse = {
 
 export type GetProductRequest = {
   pageNumber?: string;
+  keyword?: string;
 };
 
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query<GetProductResponse, GetProductRequest>({
-      query: ({ pageNumber } = {}) => ({
+      query: ({ pageNumber, keyword } = {}) => ({
         url: PRODUCTS_URL,
         params: {
+          keyword,
           pageNumber,
         },
       }),

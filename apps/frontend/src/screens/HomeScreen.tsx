@@ -4,8 +4,12 @@ import { Product, Loader, Message, Paginate } from '@mern-proshop/ui';
 import { useGetProductsQuery } from '@mern-proshop/state';
 
 const HomeScreen = () => {
-  const { pageNumber = '1' } = useParams<{ pageNumber: string }>();
+  const { pageNumber = '1', keyword } = useParams<{
+    pageNumber: string;
+    keyword: string;
+  }>();
   const { data, isLoading, isError, error } = useGetProductsQuery({
+    keyword,
     pageNumber,
   });
 
@@ -26,7 +30,11 @@ const HomeScreen = () => {
           </Col>
         ))}
       </Row>
-      <Paginate pages={data.pages} page={data.page} />
+      <Paginate
+        pages={data.pages}
+        page={data.page}
+        keyword={keyword ? keyword : ''}
+      />
     </>
   );
 };

@@ -6,23 +6,30 @@ export interface PaginateProps {
   pages: number;
   page: number;
   isAdmin?: boolean;
-  // keyword?: string
+  keyword?: string;
 }
 
-export const Paginate = (props: PaginateProps) => {
+export const Paginate = ({
+  pages,
+  page,
+  isAdmin = false,
+  keyword = '',
+}: PaginateProps) => {
   return (
-    props.pages > 1 && (
+    pages > 1 && (
       <Pagination>
-        {[...Array(props.pages).keys()].map((x) => (
+        {[...Array(pages).keys()].map((x) => (
           <LinkContainer
             key={x + 1}
             to={
-              props.isAdmin ? `/admin/productlist/${x + 1}` : `/page/${x + 1}`
+              isAdmin
+                ? keyword
+                  ? `/search/${keyword}/page/${x + 1}`
+                  : `/admin/productlist/${x + 1}`
+                : `/page/${x + 1}`
             }
           >
-            <Pagination.Item active={x + 1 === props.page}>
-              {x + 1}
-            </Pagination.Item>
+            <Pagination.Item active={x + 1 === page}>{x + 1}</Pagination.Item>
           </LinkContainer>
         ))}
       </Pagination>
