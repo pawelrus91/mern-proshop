@@ -1,6 +1,12 @@
 import { Row, Col } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
-import { Product, Loader, Message, Paginate } from '@mern-proshop/ui';
+import {
+  Product,
+  Loader,
+  Message,
+  Paginate,
+  ProductCarousel,
+} from '@mern-proshop/ui';
 import { useGetProductsQuery } from '@mern-proshop/state';
 
 const HomeScreen = () => {
@@ -22,10 +28,12 @@ const HomeScreen = () => {
 
   return (
     <>
-      {keyword && (
+      {keyword ? (
         <Link to="/" className="btn btn-light mb-4">
           Go Back
         </Link>
+      ) : (
+        <ProductCarousel />
       )}
       <h1>Latest Products</h1>
       <Row>
