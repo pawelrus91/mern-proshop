@@ -19,7 +19,7 @@ import {
 } from '@mern-proshop/state';
 import { toast } from 'react-toastify';
 
-import { Loader, Rating, Message } from '@mern-proshop/ui';
+import { Loader, Rating, Message, Meta } from '@mern-proshop/ui';
 import { Review } from '@mern-proshop/types';
 
 const ProductScreen = () => {
@@ -100,6 +100,7 @@ const ProductScreen = () => {
       <Link to="/" className="btn btn-light my-3">
         Go Back
       </Link>
+      <Meta title={product?.name} />
       <Row>
         <Col md={5}>
           <Image src={product?.image} alt={product?.name} fluid />

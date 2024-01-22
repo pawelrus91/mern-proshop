@@ -6,6 +6,7 @@ import {
   Message,
   Paginate,
   ProductCarousel,
+  Meta,
 } from '@mern-proshop/ui';
 import { useGetProductsQuery } from '@mern-proshop/state';
 
@@ -35,6 +36,7 @@ const HomeScreen = () => {
       ) : (
         <ProductCarousel />
       )}
+      <Meta />
       <h1>Latest Products</h1>
       <Row>
         {data?.products.map((product) => (

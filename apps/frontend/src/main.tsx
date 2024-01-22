@@ -15,7 +15,7 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-
+import { HelmetProvider } from 'react-helmet-async';
 import App from './app/app';
 import HomeScreen from './screens/HomeScreen';
 import ProductScreen from './screens/ProductScreen';
@@ -80,12 +80,14 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <StrictMode>
-    <Provider store={store}>
-      <PayPalScriptProvider
-        options={{ clientId: 'test', components: 'buttons', currency: 'USD' }}
-      >
-        <RouterProvider router={router} />
-      </PayPalScriptProvider>
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <PayPalScriptProvider
+          options={{ clientId: 'test', components: 'buttons', currency: 'USD' }}
+        >
+          <RouterProvider router={router} />
+        </PayPalScriptProvider>
+      </Provider>
+    </HelmetProvider>
   </StrictMode>
 );

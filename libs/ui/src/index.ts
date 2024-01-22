@@ -1,3 +1,4 @@
+export * from './components/Meta';
 export * from './components/ProductCarousel/ProductCarousel';
 export * from './components/SearchBox';
 export * from './components/Paginate/Paginate';
