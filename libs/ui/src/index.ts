@@ -1,3 +1,4 @@
+export * from './components/SearchBox';
 export * from './components/Paginate/Paginate';
 export * from './components/CheckoutSteps/CheckoutSteps';
 export * from './components/PrivateRoute';

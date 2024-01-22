@@ -1,5 +1,5 @@
 import { Row, Col } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Product, Loader, Message, Paginate } from '@mern-proshop/ui';
 import { useGetProductsQuery } from '@mern-proshop/state';
 
@@ -22,6 +22,11 @@ const HomeScreen = () => {
 
   return (
     <>
+      {keyword && (
+        <Link to="/" className="btn btn-light mb-4">
+          Go Back
+        </Link>
+      )}
       <h1>Latest Products</h1>
       <Row>
         {data?.products.map((product) => (
