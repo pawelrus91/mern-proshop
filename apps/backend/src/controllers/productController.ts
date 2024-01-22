@@ -9,10 +9,22 @@ import type { Request, Response } from 'express';
  * @route       GET /api/products
  * @access      Public
  */
-const getProducts = asyncHandler(async (req: Request, res: Response) => {
-  const products = await Product.find({});
-  res.send(products);
-});
+const getProducts = asyncHandler(
+  async (
+    req: Request<unknown, TProduct[], unknown, { pageNumber: number }>,
+    res: Response
+  ) => {
+    const pageSize = 4;
+    const page = Number(req.query.pageNumber) || 1;
+    const count = await Product.countDocuments();
+
+    const products = await Product.find({})
+      .limit(pageSize)
+      .skip(pageSize * (page - 1));
+
+    res.send({ products, page, pages: Math.ceil(count / pageSize) });
+  }
+);
 
 /**
  * @description Fetch a product

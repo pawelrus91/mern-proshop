@@ -1,7 +1,8 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { Loader, Message } from '@mern-proshop/ui';
+import { useParams } from 'react-router-dom';
+import { Loader, Message, Paginate } from '@mern-proshop/ui';
 import {
   useGetProductsQuery,
   useCreateProductMutation,
@@ -11,7 +12,10 @@ import { toast } from 'react-toastify';
 import { Product } from '@mern-proshop/types';
 
 const ProductListScreen = () => {
-  const { data: products, isLoading, error, refetch } = useGetProductsQuery();
+  const { pageNumber = '1' } = useParams<{ pageNumber: string }>();
+  const { data, isLoading, error, refetch } = useGetProductsQuery({
+    pageNumber,
+  });
 
   const [createProduct, { isLoading: isCreating }] = useCreateProductMutation();
 
@@ -76,7 +80,7 @@ const ProductListScreen = () => {
               </tr>
             </thead>
             <tbody>
-              {products?.map((product) => (
+              {data?.products?.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -101,7 +105,11 @@ const ProductListScreen = () => {
               ))}
             </tbody>
           </Table>
-          <div>Pagination</div>
+          <Paginate
+            pages={data?.pages as number}
+            page={data?.page as number}
+            isAdmin={true}
+          />
         </>
       )}
     </>

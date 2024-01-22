@@ -1,19 +1,18 @@
 import { Row, Col } from 'react-bootstrap';
-import { Product, Loader, Message } from '@mern-proshop/ui';
+import { useParams } from 'react-router-dom';
+import { Product, Loader, Message, Paginate } from '@mern-proshop/ui';
 import { useGetProductsQuery } from '@mern-proshop/state';
 
 const HomeScreen = () => {
-  const {
-    data: products = [],
-    isLoading,
-    isError,
-    error,
-  } = useGetProductsQuery();
+  const { pageNumber = '1' } = useParams<{ pageNumber: string }>();
+  const { data, isLoading, isError, error } = useGetProductsQuery({
+    pageNumber,
+  });
 
   if (isError) {
     <Message variant="danger">{JSON.stringify(error)}</Message>;
   }
-  if (isLoading) {
+  if (isLoading || !data) {
     return <Loader />;
   }
 
@@ -21,12 +20,13 @@ const HomeScreen = () => {
     <>
       <h1>Latest Products</h1>
       <Row>
-        {products.map((product) => (
+        {data?.products.map((product) => (
           <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
             <Product product={product} />
           </Col>
         ))}
       </Row>
+      <Paginate pages={data.pages} page={data.page} />
     </>
   );
 };

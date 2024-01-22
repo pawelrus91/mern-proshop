@@ -7,11 +7,24 @@ type UploadImageResponse = { message: string; image: string };
 
 type CreateReview = Pick<Review, 'comment' | 'rating'> & { productId: string };
 
+export type GetProductResponse = {
+  products: Product[];
+  page: number;
+  pages: number;
+};
+
+export type GetProductRequest = {
+  pageNumber?: string;
+};
+
 export const productsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getProducts: builder.query<Product[], void>({
-      query: () => ({
+    getProducts: builder.query<GetProductResponse, GetProductRequest>({
+      query: ({ pageNumber } = {}) => ({
         url: PRODUCTS_URL,
+        params: {
+          pageNumber,
+        },
       }),
       keepUnusedDataFor: 5,
       providesTags: ['Products'],
