@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "data:import": "npx nx serve seeder",
-    "data:destroy": "npx nx serve seeder --args=\"-d\""
+    "data:destroy": "npx nx serve seeder --args=\"-d\"",
+    "build": "yarn && nx build frontend && nx build backend"
   },
   "private": true,
   "proxy": "http://localhost:3333",
