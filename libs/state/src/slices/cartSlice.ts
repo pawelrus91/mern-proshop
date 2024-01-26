@@ -66,6 +66,8 @@ const cartSlice = createSlice({
 
       return updateCard(state);
     },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    resetCart: (state) => (state = initialState),
   },
 });
 
@@ -75,6 +77,7 @@ export const {
   saveShippingAddress,
   savePaymentMethod,
   clearCartItems,
+  resetCart,
 } = cartSlice.actions;
 
 export const cartSliceReducer = cartSlice.reducer;

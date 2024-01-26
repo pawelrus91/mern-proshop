@@ -9,6 +9,7 @@ import {
   useAppDispatch,
   useLogoutMutation,
   logout,
+  resetCart,
 } from '@mern-proshop/state';
 
 interface HeaderProps {}
@@ -25,6 +26,7 @@ export const Header = (props: HeaderProps) => {
   const logoutHandler = async () => {
     try {
       await logoutApiCall().unwrap();
+      dispatch(resetCart());
       dispatch(logout());
       navigate('/');
     } catch (err) {
