@@ -11,7 +11,7 @@ import productRoutes from './routes/productRoutes';
 import userRoutes from './routes/userRoutes';
 import orderRoutes from './routes/ordersRoutes';
 import uploadRoutes from './routes/uploadRoutes';
-import { errorHandler, noFound } from './moddleware/errorMiddleware';
+import { errorHandler, noFound } from './middleware/errorMiddleware';
 import { connectDB } from '@mern-proshop/database';
 import bodyParser from 'body-parser';
 

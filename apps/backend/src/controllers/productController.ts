@@ -1,4 +1,4 @@
-import asyncHandler from '../moddleware/asyncHandler';
+import asyncHandler from '../middleware/asyncHandler';
 
 import { Product } from '@mern-proshop/database';
 import type { Product as TProduct, Review } from '@mern-proshop/types';

@@ -11,7 +11,7 @@ import {
   deleteUser,
   updateUser,
 } from '../controllers/userController';
-import { protect, admin } from '../moddleware/authMiddleware';
+import { protect, admin } from '../middleware/authMiddleware';
 
 const router = express.Router();
 

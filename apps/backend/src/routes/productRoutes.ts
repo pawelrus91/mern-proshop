@@ -9,8 +9,8 @@ import {
   createProductReview,
   getTopProducts,
 } from '../controllers/productController';
-import { protect, admin } from '../moddleware/authMiddleware';
-import checkObjectId from '../moddleware/checkObjectId';
+import { protect, admin } from '../middleware/authMiddleware';
+import checkObjectId from '../middleware/checkObjectId';
 
 const router = express.Router();
 

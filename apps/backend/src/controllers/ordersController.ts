@@ -1,4 +1,4 @@
-import asyncHandler from '../moddleware/asyncHandler';
+import asyncHandler from '../middleware/asyncHandler';
 
 import { Order } from '@mern-proshop/database';
 import { NewOrder } from '@mern-proshop/types';

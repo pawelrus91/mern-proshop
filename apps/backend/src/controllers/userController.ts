@@ -1,4 +1,4 @@
-import asyncHandler from '../moddleware/asyncHandler';
+import asyncHandler from '../middleware/asyncHandler';
 import { User } from '@mern-proshop/database';
 
 import type {
